@@ -1,5 +1,3 @@
-package java_practice;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
@@ -17,11 +15,19 @@ public class PSE extends JFrame {
         {"Fr", "Ra", "Ac", "Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn", "Nh", "Fl", "Mc", "Lv", "Ts", "Og"}
     };
 
+    private int maxColumns;
+    private int maxRows;
+    private Color mainBackground;
+
     public PSE() {
         setTitle("Periodensystem der Elemente");
         setSize(1000, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        int maxColumns = 0;
+        mainBackground = new Color(64, 63, 60);
+        setBackground(mainBackground);
+
+        maxRows = 7;
+        maxColumns = 0;
         for (String[] row : ELEMENTS) {
             maxColumns = Math.max(maxColumns, row.length);
         }
@@ -31,48 +37,91 @@ public class PSE extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         setLayout(gbl);
     
-        for (int i = 0; i < ELEMENTS.length-1; i++) {
-            for (int j = 0; j < ELEMENTS[i].length; j++) {// Leere Felder, wenn die Zeile kürzer ist
-                System.out.println(ELEMENTS[i][j]);
-                System.out.println(i + " " + j);
-                JTextField textField = new JTextField(ELEMENTS[i][j]);
-                textField.setHorizontalAlignment(JTextField.CENTER);
-                textField.setBackground(getElementColor(ELEMENTS[i][j]));
-                textField.setEditable(false);
+        for (int i = 0; i < maxRows; i++) {
+            for (int j = 0; j < maxColumns; j++) {// Leere Felder, wenn die Zeile kürzer ist
+                JLabel label = new JLabel(ELEMENTS[i][j]);
+                label.setBackground(getElementColor(ELEMENTS[i][j]));
+                label.setOpaque(true);
+                label.setBorder(BorderFactory.createLineBorder(mainBackground, 2));
+                
                 gbc.gridx = j;
                 gbc.gridy = i;
                 gbc.fill = GridBagConstraints.BOTH;
                 gbc.anchor = GridBagConstraints.CENTER;
                 gbc.weightx = 20;
                 gbc.weighty = 20;
-                add(textField, gbc);
+    
+                add(label, gbc);
             }
         }
 
         setVisible(true);
 
-        Entry n = new Entry();
+        new Entry();
     }
 
     // Methode zur Farbgebung nach Elementgruppen
     private Color getElementColor(String element) {
+
+        
+        // Nichtmetalle (Rot)
+         String[] nichtmetalle = {"H", "C", "N", "O", "P", "S", "Se"};
+        // Alkaliemetalle (Grün)
+        
+        // Erdalkalimetalle (Dunkelgrün)
+        
+        // Übergangsmetalle (Blau)
+        
+        // Andere Metalle (Lila)
+        
+        // Halbmetalle (hell Lila)
+        
+        // Halogene (orange/beige)
+        
+        // Edelgase (Gelb/Beige)
+       // for (String[] elem: ELEMENTS){
+           // for (String word: elem){
+            //    if (Arrays.asList(nichtmetalle).contains(word)){
+           //         return new Color(225, 130, 135);
+         //       }
+        //    }
+      //  } //TODO Problem!!!
+
+        if (element.equals("B")){
+            return new Color(194, 156, 178);
+        }
+        if (element.equals("F")){
+            return new Color(233, 165, 153);
+        }
+        if (element.equals("I")){
+            return new Color(233, 165, 153);
+        }
         if (" ".contains(element)){
-            return new Color(50, 50, 50);
+            return mainBackground;
         }
-        if ("H He".contains(element)){
-            return Color.CYAN;
+        if ("H C N O P S Se".contains(element)){
+            return new Color(225, 130, 135);
         }
-        if ("Li Be Na Mg K Ca Rb Sr Cs Ba Fr Ra".contains(element)){
-            return Color.ORANGE;
+        if ("Li Na K Rb Cs Fr".contains(element)){
+            return new Color(183, 206, 143);
         }
-        if ("Sc Ti V Cr Mn Fe Co Ni Cu Zn Y Zr Nb Mo Tc Ru Rh Pd Ag Cd Hf Ta W Re Os Ir Pt Au Hg Rf Db Sg Bh Hs Mt Ds Rg Cn".contains(element)){
-            return Color.LIGHT_GRAY;
+        if ("Be Mg Ca Sr Ba Ra".contains(element)){
+            return new Color(152, 173, 121);
         }
-        if ("B C N O F Ne Al Si P S Cl Ar Ga Ge As Se Br Kr In Sn Sb Te I Xe Tl Pb Bi Po At Rn".contains(element)){
-            return Color.YELLOW;
+        if ("Sc Ti V Cr Mn Fe Co Ni Cu Zn Y Zr Nb Mo Tc Ru Rh Pd Ag Cd La Hf Ta W Re Os Ir Pt Au Hg Ac Rf Db Sg Bh Hs Mt Ds Rg Cn".contains(element)){
+            return new Color(122, 149, 179);
         }
-        if ("La Ac".contains(element)){ 
-            return Color.PINK;
+        if ("B Si Ge As Sb Te Po".contains(element)){ 
+            return new Color(194, 156, 178);
+        }
+        if ("Al Ga In Sn Tl Pb Bi Nh Fl Mc Lv".contains(element)){ 
+            return new Color(164, 131, 166);
+        }
+        if ("F Cl Br I At Ts".contains(element)){ 
+            return new Color(233, 165, 153);
+        }
+        if ("He Ne Ar Kr Xe Rn Og".contains(element)){ 
+            return new Color(241, 197, 169);
         }
         return Color.WHITE; 
     }
